@@ -9,7 +9,9 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const Employee = require("./lib/Employee");
 
+let team = [];
 
 
 const questions = {
@@ -82,3 +84,54 @@ const questions = {
         }
     ]
 }
+
+function init() {
+    // let addNewMembers = true;
+
+    addNewMember();
+};
+
+function addNewMember() {
+    inquirer.prompt(selectMemberType)
+        .then(answer => {
+            console.log(answer.memberType);
+
+            if (answer.memberType === "Manager") {
+                inquirer.prompt(questions.Manager)
+                    .then(answer => {
+                        console.log(team);
+
+                        //save employee info
+                        const manager = new Manager(
+                            answer.name,
+                            answer.id,
+                            answer.email,
+                            answer.officeNumber
+                        );
+
+                        //add info to team array
+                        team.push(manager);
+
+                    });
+                } else if (answer.memberType === "Engineer") {
+                    inquirer.prompt(questions.Engineer)
+                        .then(answer => {
+                            console.log(team);
+    
+                            //save ee info
+                            const engineer = new Engineer(
+                                answer.name,
+                                answer.id,
+                                answer.email,
+                                answer.github
+                            );
+                            //add info to team array
+                            team.push(engineer);
+                            if (answer.addNew === "yes") {
+                                addNewMember();
+                            }
+                        });
+                }
+            })
+    }
+    init();
