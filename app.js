@@ -36,6 +36,12 @@ const questions = {
             type: "input",
             name: "officeNumber",
             message: "What is the manager's office number?",
+        },
+        {
+            type: "list",
+            name: "addNew",
+            message: "Do you want to add another employee",
+            choices: ["yes", "no"]
         }
     ],
 
@@ -59,6 +65,12 @@ const questions = {
             type: "input",
             name: "github",
             message: "What is the engineer's GitHub username?",
+        },
+        {
+            type: "list",
+            name: "addNew",
+            message: "Do you want to add another employee",
+            choices: ["yes", "no"]
         }
     ],
 
@@ -82,9 +94,24 @@ const questions = {
             type: "input",
             name: "school",
             message: "What school is the intern attending?",
+        },
+        {
+            type: "list",
+            name: "addNew",
+            message: "Do you want to add another employee",
+            choices: ["yes", "no"]
         }
     ]
-}
+};
+
+const selectMemberType = [
+    {
+        type: "list",
+        name: "memberType",
+        message: "Please choose the role for the employee",
+        choices: ["Manager", "Engineer", "Intern"]
+    }
+]
 
 function init() {
     // let addNewMembers = true;
@@ -148,7 +175,7 @@ function addNewMember() {
                                     answer.school
                                 );
                                 //add info to team array
-                                team.push(engineer);
+                                team.push(intern);
                                 if (answer.addNew === "yes") {
                                     addNewMember();
                                 };
@@ -158,3 +185,5 @@ function addNewMember() {
         };
         
 init();
+
+render(team);
