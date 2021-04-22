@@ -122,12 +122,11 @@ function init() {
 function addNewMember() {
     inquirer.prompt(selectMemberType)
         .then(answer => {
-            console.log(answer.memberType);
+            // console.log(answer.memberType);
 
             if (answer.memberType === "Manager") {
                 inquirer.prompt(questions.Manager)
                     .then(answer => {
-                        console.log(team);
 
                         //save employee info
                         const manager = new Manager(
@@ -142,12 +141,18 @@ function addNewMember() {
                             team.push(manager);
                             canAddManager = false;
                         };
+
+                        if (answer.addNew === "yes") {
+                            addNewMember();
+                        } else {
+                            generate();
+                        };
+
                     });
                 
                 } else if (answer.memberType === "Engineer") {
                     inquirer.prompt(questions.Engineer)
                         .then(answer => {
-                            console.log(team);
     
                             //save ee info
                             const engineer = new Engineer(
@@ -160,12 +165,14 @@ function addNewMember() {
                             team.push(engineer);
                             if (answer.addNew === "yes") {
                                 addNewMember();
+                            } else {
+                                generate();
                             };
+
                         });
                     } else if (answer.memberType === "Intern") {
                         inquirer.prompt(questions.Intern)
                             .then(answer => {
-                                console.log(team);
         
                                 //save ee info
                                 const intern = new Intern(
@@ -178,12 +185,17 @@ function addNewMember() {
                                 team.push(intern);
                                 if (answer.addNew === "yes") {
                                     addNewMember();
+                                } else {
+                                    generate();
                                 };
                             });
                     };
                 });
         };
+
+        function generate() {
+            fs.writeFileSync(outputPath, render(team), "utf-8");
+            process.exit(0);
+        }
         
 init();
-
-render(team);
