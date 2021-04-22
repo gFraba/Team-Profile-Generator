@@ -12,6 +12,7 @@ const render = require("./lib/htmlRenderer");
 const Employee = require("./lib/Employee");
 
 let team = [];
+let canAddManager = true;
 
 
 const questions = {
@@ -109,10 +110,13 @@ function addNewMember() {
                             answer.officeNumber
                         );
 
-                        //add info to team array
-                        team.push(manager);
-
+                        //add info to team array if manager doesn't exist
+                        if (canAddManager) {
+                            team.push(manager);
+                            canAddManager = false;
+                        };
                     });
+                
                 } else if (answer.memberType === "Engineer") {
                     inquirer.prompt(questions.Engineer)
                         .then(answer => {
@@ -129,9 +133,28 @@ function addNewMember() {
                             team.push(engineer);
                             if (answer.addNew === "yes") {
                                 addNewMember();
-                            }
+                            };
                         });
-                }
-            })
-    }
-    init();
+                    } else if (answer.memberType === "Intern") {
+                        inquirer.prompt(questions.Intern)
+                            .then(answer => {
+                                console.log(team);
+        
+                                //save ee info
+                                const intern = new Intern(
+                                    answer.name,
+                                    answer.id,
+                                    answer.email,
+                                    answer.school
+                                );
+                                //add info to team array
+                                team.push(engineer);
+                                if (answer.addNew === "yes") {
+                                    addNewMember();
+                                };
+                            });
+                    };
+                });
+        };
+        
+init();
