@@ -15,6 +15,10 @@ Node CLI that takes in information about employees and generates an HTML webpage
 Download or clone repo. "npm i" to install dependencies.
 ## Usage
 "node app.js" to run. Once done entering employees answer no when asked if you would like to enter another employee.  An html file will be produced with the description of your team that you entered.
+<br />
+<br />
+A demo of the app can be viewed at this link [Demo](https://drive.google.com/file/d/1iBwoAzjh1a2a8ePxIFUQtQpfq8YUNRf_/view)
+
 ## License
 This application is covered by the MIT license. 
 ## Contributors
